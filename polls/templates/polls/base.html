@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'polls/style.css'%}">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Title</title>
+</head>
+<body>
+    <div class="w3-bar w3-black topnav">
+        <a href="{% url 'polls:base' %}" class="w3-bar-item w3-button w3-mobile w3-purple">Home</a>
+        <a href="#" class="w3-bar-item w3-button w3-mobile">Polls</a>
+        <a href="#" class="w3-bar-item w3-button w3-mobile">Food</a>
+        <a href="#" class="w3-bar-item w3-button w3-mobile">Games</a>
+        <div class="w3-dropdown-hover w3-mobile">
+            <button class="w3-button">Dropdown <i class="fa fa-caret-down"></i></button>
+            <div class="w3-dropdown-content w3-bar-block w3-dark-grey">
+                <a href="#" class="w3-bar-item w3-button w3-mobile">Link 1</a>
+                <a href="#" class="w3-bar-item w3-button w3-mobile">Link 2</a>
+                <a href="#" class="w3-bar-item w3-button w3-mobile">Link 3</a>
+            </div>
+        </div>
+        <div>
+            {% if user.is_authenticated %}
+                <a class="w3-bar-item w3-button w3-mobile w3-right w3-purple" href="{% url 'users:logout' %}">Logout</a>
+                <a class="w3-bar-item w3-button w3-mobile w3-right w3-purple" href="#">Profile</a>
+            {% else%}
+                <a class="w3-bar-item w3-button w3-mobile w3-right w3-purple" href="{% url 'users:login' %}">Login</a>
+                <a class="w3-bar-item w3-button w3-mobile w3-right w3-purple" href="{% url 'users:register' %}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+        {% if messages %}
+            {% for message in messages %}
+                {% if 'success' in message.tags %}
+                    <div class="alert alert-success">
+                        {{message}}
+                    </div>
+                {% elif 'info' in message.tags %}
+                    <div class="alert alert-info">
+                        {{message}}
+                    </div>
+                {% else %}
+                    <div class="alert alert-danger">
+                        {{message}}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
